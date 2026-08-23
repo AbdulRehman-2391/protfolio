@@ -1670,7 +1670,14 @@
       statusDiv.textContent = "Sending...";
       statusDiv.style.color = "var(--text-primary)";
       
-      emailjs.sendForm('service_eu2cd43', 'template_092xaq2', this)
+      const templateParams = {
+        from_name: document.getElementById('name').value,
+        from_email: document.getElementById('email').value,
+        subject: document.getElementById('subject').value,
+        message: document.getElementById('message').value
+      };
+      
+      emailjs.send('service_eu2cd43', 'template_092xaq2', templateParams)
         .then(function() {
           statusDiv.textContent = "Message sent successfully! I will get back to you soon.";
           statusDiv.style.color = "var(--success-green)";
