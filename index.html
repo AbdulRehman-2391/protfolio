@@ -11,6 +11,9 @@
   <title>Abdul Rehman — AI Engineer & ML Developer | Pakistan</title>
   <meta name="description" content="Portfolio of Abdul Rehman — BS AI student at COMSATS, AI Engineer with 4 internships and 10+ real-world AI projects spanning Computer Vision, NLP, Cybersecurity, and Full-Stack development." />
 
+  <!-- EmailJS SDK -->
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+
   <!-- Google Fonts -->
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
@@ -1439,24 +1442,25 @@
 
           <!-- Right Form -->
           <div class="glass-card reveal">
-            <form action="mailto:malik.rehmanwah5@gmail.com" method="POST" enctype="text/plain" class="contact-form">
+            <form id="contact-form" class="contact-form">
               <div class="form-group">
                 <label for="name">Name</label>
-                <input type="text" id="name" name="Name" class="form-control" placeholder="Your Name" required />
+                <input type="text" id="name" name="from_name" class="form-control" placeholder="Your Name" required />
               </div>
               <div class="form-group">
                 <label for="email">Email</label>
-                <input type="email" id="email" name="Email" class="form-control" placeholder="Your Email Address" required />
+                <input type="email" id="email" name="from_email" class="form-control" placeholder="Your Email Address" required />
               </div>
               <div class="form-group">
                 <label for="subject">Subject</label>
-                <input type="text" id="subject" name="Subject" class="form-control" placeholder="Subject / Project Title" required />
+                <input type="text" id="subject" name="subject" class="form-control" placeholder="Subject / Project Title" required />
               </div>
               <div class="form-group">
                 <label for="message">Message</label>
-                <textarea id="message" name="Message" class="form-control" placeholder="Tell me about your project or inquiry..." required></textarea>
+                <textarea id="message" name="message" class="form-control" placeholder="Tell me about your project or inquiry..." required></textarea>
               </div>
               <button type="submit" class="btn btn-gradient" style="width: 100%;">Send Message &rarr;</button>
+              <div id="contact-status" style="margin-top: 10px; font-size: 0.9rem; font-weight: 600; text-align: center;"></div>
             </form>
           </div>
         </div>
@@ -1655,6 +1659,27 @@
       requestAnimationFrame(animateParticles);
     }
     animateParticles();
+
+    // --- EmailJS Integration ---
+    emailjs.init("mA0iek5O7yZ367LWerTsY");
+
+    document.getElementById('contact-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      
+      const statusDiv = document.getElementById('contact-status');
+      statusDiv.textContent = "Sending...";
+      statusDiv.style.color = "var(--text-primary)";
+      
+      emailjs.sendForm('service_eu2cd43', 'template_092xaq2', this)
+        .then(function() {
+          statusDiv.textContent = "Message sent successfully! I will get back to you soon.";
+          statusDiv.style.color = "var(--success-green)";
+          document.getElementById('contact-form').reset();
+        }, function(error) {
+          statusDiv.textContent = "Something went wrong. Please email me directly at malik.rehmanwah5@gmail.com";
+          statusDiv.style.color = "#EF4444";
+        });
+    });
   </script>
 </body>
 </html>
