@@ -1661,8 +1661,6 @@
     animateParticles();
 
     // --- EmailJS Integration ---
-    emailjs.init("mA0iek5O7yZ367LWerTsY");
-
     document.getElementById('contact-form').addEventListener('submit', function(event) {
       event.preventDefault();
       
@@ -1670,22 +1668,21 @@
       statusDiv.textContent = "Sending...";
       statusDiv.style.color = "var(--text-primary)";
       
-      const templateParams = {
-        from_name: document.getElementById('name').value,
-        from_email: document.getElementById('email').value,
-        subject: document.getElementById('subject').value,
-        message: document.getElementById('message').value
-      };
-      
-      emailjs.send('service_eu2cd43', 'template_092xaq2', templateParams)
-        .then(function() {
-          statusDiv.textContent = "Message sent successfully! I will get back to you soon.";
-          statusDiv.style.color = "var(--success-green)";
-          document.getElementById('contact-form').reset();
-        }, function(error) {
-          statusDiv.textContent = "Something went wrong. Please email me directly at malik.rehmanwah5@gmail.com";
-          statusDiv.style.color = "#EF4444";
-        });
+      emailjs.init("mA0iek5O7yZ367LWerTsY");
+      emailjs.send("service_eu2cd43", "template_092xaq2", { 
+        from_name: document.getElementById("name").value, 
+        from_email: document.getElementById("email").value, 
+        subject: document.getElementById("subject").value, 
+        message: document.getElementById("message").value 
+      }).then(function() {
+        statusDiv.textContent = "Message sent successfully! I will get back to you soon.";
+        statusDiv.style.color = "var(--success-green)";
+        document.getElementById('contact-form').reset();
+      }, function(error) {
+        console.error("EmailJS Error:", error);
+        statusDiv.textContent = "Something went wrong. Please email me directly at malik.rehmanwah5@gmail.com";
+        statusDiv.style.color = "#EF4444";
+      });
     });
   </script>
 </body>
